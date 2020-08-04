@@ -1,0 +1,2 @@
+no interface TenGigE0/0/0/5.2300
+no l2vpn xconnect group ALX_NCS_LE-102300
