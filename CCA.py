@@ -20,12 +20,10 @@ meg_index = my_config.parse_accedian()
 #print(json.dumps(dict1,indent=4))
 my_config = Service(**dict1)
 my_config.Command_Creation()
-#my_config.push_config()
-#my_config.delete_config()
-#my_config.Validate_ccm()
+my_config.push_config()
+my_config.Validate_ccm()
 my_config.Y1564_test()
-
-# this is dipankar
+my_config.delete_config()
 
 # Spirent_L2_Gen = Create_Spirent_L2_Gen()
 # Spirent_L2_Gen.Port_Init()

@@ -15,6 +15,7 @@ from multiprocessing import Pool
 create_delete_list = ['create','delete']
 mep_meg_dmm_slm_list = ['meg','mep','dmm','slm']
 maxhosts = 5
+dict2 = {}
 
 class Service:
 
@@ -121,9 +122,29 @@ class Service:
             for node in self.data["site_list"]:
                 if node['login']['device_type'] == 'accedian':
                     net_connect = Netmiko(**node['login'])
-                    print(node['Node_name'],end=' : ')
                     output = net_connect.send_command("cfm show mep database LEXXX-{}|{}|{}".format(mep_name,self.data['MEG_level'],node['Remote_MEP']))
-                    print(output)
+                    node['remote_mac'] = re.findall("\w\w[:]\w\w[:]\w\w[:]\w\w[:]\w\w[:]\w\w", output)[0]
+                    if node['Protected'] == 'YES':
+                        output = net_connect.send_command("port show status PORT-{}".format(node['Nni_port']))
+                        if re.findall("Down", output)[0] == 'Down':
+                            node['Nni_port'] = node['Nni_port'] + 1
+                    for create_delete in create_delete_list:
+                        with open('templates/Accedian_{}_{}_Y1564.j2'.format(node["side"],create_delete),'r') as f:
+                            Temp = f.read()
+                            failure_command = Template(Temp).render(**self.data,**node)
+                            file_open = open('templates/Accedian_{}_{}_Y1564.txt'.format(node["Node_name"],create_delete), 'w+')
+                            file_open.write(failure_command)
+                            file_open.write('\n')
+                            file_open.close()
+                            print("**** {} templating done on node {} ".format(create_delete,node['Node_name']))
+                            with open('templates/Accedian_{}_{}_Y1564.txt'.format(node["Node_name"],create_delete),'r') as f:
+                                f2 = f.readlines()
+                                output = net_connect.send_config_set(f2)
+                                print(output)
+                            if create_delete == "create":
+                                time.sleep(300)
+                            output = net_connect.send_command("Y1564 show activation Y1564-LE-{}".format(mep_name))
+                            print(output)
                     net_connect.disconnect()
         elif list1 == ['cisco_xr','cisco_xr']:
             print("Loop can not be performed")

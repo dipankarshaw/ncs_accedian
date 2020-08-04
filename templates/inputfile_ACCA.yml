@@ -3,7 +3,7 @@ Flat_QOS: "YES"
 CCM_REQUIRED: "YES"
 item: 2300
 total_BW: 10000000
-service_BW: 4000000
+service_BW: 4500000
 CIR_percentage: 25
 MEG_level: 1
 QOS_type: "Business3"

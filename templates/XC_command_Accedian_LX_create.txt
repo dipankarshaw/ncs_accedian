@@ -1,5 +1,5 @@
-bandwidth-regulator add regulator U8_ALX/NCS/LE-102300 cir 4000000 cir-max 4000000 cbs 100 eir 0 eir-max 0 ebs 10 color-mode blind coupling-flag false
-bandwidth-regulator add regulator N5_ALX/NCS/LE-102300  cir 4000000 cir-max 4000000 cbs 100 eir 0 eir-max 0 ebs 10 color-mode blind coupling-flag false
+bandwidth-regulator add regulator U8_ALX/NCS/LE-102300 cir 4500000 cir-max 4500000 cbs 100 eir 0 eir-max 0 ebs 10 color-mode blind coupling-flag false
+bandwidth-regulator add regulator N5_ALX/NCS/LE-102300  cir 4500000 cir-max 4500000 cbs 100 eir 0 eir-max 0 ebs 10 color-mode blind coupling-flag false
 vid-set add N5_ALX/NCS/LE-102300 policy-list Traffic-5 vlan-type s-vlan vid-list 2400
 filter add l2 U8_ALX/NCS/LE-102300 vlan1-ethertype s-vlan vlan1-id 2400 enable vlan2-ethertype c-vlan vlan2-id 2300 enable
 policy edit Traffic-8 15 state enable action permit pre-marking green regulator enable U8_ALX/NCS/LE-102300 filter l2 U8_ALX/NCS/LE-102300 evc-encapsulation replace evc-ethertype s-vlan evc-vlan-id 2400 cos-mapping direct green-cfi 0 green-pcp 1 yellow-cfi 0 yellow-pcp 1 out-port PORT-5
