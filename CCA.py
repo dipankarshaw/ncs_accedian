@@ -14,7 +14,7 @@ from service import Service
 import yaml
 #from Class_Based_Spirent_Code_Generation import Spirent_L2_Traffic_Gen,Get_Spirent_Config,Create_Spirent_L2_Gen
 
-dict1 = yaml.load(open('templates/inputfile_ACCA.yml'),Loader=yaml.Loader)
+dict1 = yaml.load(open('inputfile.yml'),Loader=yaml.Loader)
 my_config = Service(**dict1)
 meg_index = my_config.parse_accedian()
 #print(json.dumps(dict1,indent=4))
@@ -23,7 +23,7 @@ my_config.Command_Creation()
 my_config.push_config()
 my_config.Validate_ccm()
 my_config.Y1564_test()
-my_config.delete_config()
+#my_config.delete_config()
 
 # Spirent_L2_Gen = Create_Spirent_L2_Gen()
 # Spirent_L2_Gen.Port_Init()
